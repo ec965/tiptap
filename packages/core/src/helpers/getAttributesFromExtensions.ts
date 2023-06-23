@@ -18,7 +18,7 @@ export function getAttributesFromExtensions(extensions: Extensions): ExtensionAt
   const extensionAttributes: ExtensionAttribute[] = []
   const { nodeExtensions, markExtensions } = splitExtensions(extensions)
   const nodeAndMarkExtensions = [...nodeExtensions, ...markExtensions]
-  const defaultAttribute: Required<Attribute> = {
+  const defaultAttribute: Required<Attribute<any>> = {
     default: null,
     rendered: true,
     renderHTML: null,
@@ -83,7 +83,7 @@ export function getAttributesFromExtensions(extensions: Extensions): ExtensionAt
     }
 
     // TODO: remove `as Attributes`
-    const attributes = addAttributes() as Attributes
+    const attributes = addAttributes() as Attributes<any>
 
     Object
       .entries(attributes)

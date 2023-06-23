@@ -106,29 +106,29 @@ export type CommandSpec = (...args: any[]) => Command
 
 export type KeyboardShortcutCommand = (props: { editor: Editor }) => boolean
 
-export type Attribute = {
-  default: any
+export type Attribute<T> = {
+  default: T
   rendered?: boolean
   renderHTML?: ((attributes: Record<string, any>) => Record<string, any> | null) | null
-  parseHTML?: ((element: HTMLElement) => any | null) | null
+  parseHTML?: ((element: HTMLElement) => T | null) | null
   keepOnSplit: boolean
   isRequired?: boolean
 }
 
-export type Attributes = {
-  [key: string]: Attribute
+export type Attributes<T> = {
+  [K in keyof T]: Attribute<T>
 }
 
-export type ExtensionAttribute = {
+export type ExtensionAttribute<T = any> = {
   type: string
   name: string
-  attribute: Required<Attribute>
+  attribute: Required<Attribute<T>>
 }
 
-export type GlobalAttributes = {
+export type GlobalAttributes<T = any> = {
   types: string[]
   attributes: {
-    [key: string]: Attribute
+    [key: string]: Attribute<T>
   }
 }[]
 

@@ -22,7 +22,7 @@ import { callOrReturn } from './utilities/callOrReturn'
 import { mergeDeep } from './utilities/mergeDeep'
 
 declare module '@tiptap/core' {
-  export interface MarkConfig<Options = any, Storage = any> {
+  export interface MarkConfig<Options = any, Storage = any, AttributeTypes = any> {
     [key: string]: any
 
     /**
@@ -45,7 +45,7 @@ declare module '@tiptap/core' {
      */
     addOptions?: (this: {
       name: string
-      parent: Exclude<ParentConfig<MarkConfig<Options, Storage>>['addOptions'], undefined>
+      parent: Exclude<ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addOptions'], undefined>
     }) => Options
 
     /**
@@ -54,7 +54,7 @@ declare module '@tiptap/core' {
     addStorage?: (this: {
       name: string
       options: Options
-      parent: Exclude<ParentConfig<MarkConfig<Options, Storage>>['addStorage'], undefined>
+      parent: Exclude<ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addStorage'], undefined>
     }) => Storage
 
     /**
@@ -64,7 +64,7 @@ declare module '@tiptap/core' {
       name: string
       options: Options
       storage: Storage
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addGlobalAttributes']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addGlobalAttributes']
     }) => GlobalAttributes | {}
 
     /**
@@ -76,7 +76,7 @@ declare module '@tiptap/core' {
       storage: Storage
       editor: Editor
       type: MarkType
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addCommands']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addCommands']
     }) => Partial<RawCommands>
 
     /**
@@ -88,7 +88,7 @@ declare module '@tiptap/core' {
       storage: Storage
       editor: Editor
       type: MarkType
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addKeyboardShortcuts']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addKeyboardShortcuts']
     }) => {
       [key: string]: KeyboardShortcutCommand
     }
@@ -102,7 +102,7 @@ declare module '@tiptap/core' {
       storage: Storage
       editor: Editor
       type: MarkType
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addInputRules']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addInputRules']
     }) => InputRule[]
 
     /**
@@ -114,7 +114,7 @@ declare module '@tiptap/core' {
       storage: Storage
       editor: Editor
       type: MarkType
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addPasteRules']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addPasteRules']
     }) => PasteRule[]
 
     /**
@@ -126,7 +126,7 @@ declare module '@tiptap/core' {
       storage: Storage
       editor: Editor
       type: MarkType
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addProseMirrorPlugins']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addProseMirrorPlugins']
     }) => Plugin[]
 
     /**
@@ -136,7 +136,7 @@ declare module '@tiptap/core' {
       name: string
       options: Options
       storage: Storage
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addExtensions']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addExtensions']
     }) => Extensions
 
     /**
@@ -148,7 +148,7 @@ declare module '@tiptap/core' {
             name: string
             options: Options
             storage: Storage
-            parent: ParentConfig<MarkConfig<Options, Storage>>['extendNodeSchema']
+            parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['extendNodeSchema']
           },
           extension: Node,
         ) => Record<string, any>)
@@ -163,7 +163,7 @@ declare module '@tiptap/core' {
             name: string
             options: Options
             storage: Storage
-            parent: ParentConfig<MarkConfig<Options, Storage>>['extendMarkSchema']
+            parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['extendMarkSchema']
           },
           extension: Mark,
         ) => Record<string, any>)
@@ -179,7 +179,7 @@ declare module '@tiptap/core' {
           storage: Storage
           editor: Editor
           type: MarkType
-          parent: ParentConfig<MarkConfig<Options, Storage>>['onBeforeCreate']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onBeforeCreate']
         }) => void)
       | null
 
@@ -193,7 +193,7 @@ declare module '@tiptap/core' {
           storage: Storage
           editor: Editor
           type: MarkType
-          parent: ParentConfig<MarkConfig<Options, Storage>>['onCreate']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onCreate']
         }) => void)
       | null
 
@@ -207,7 +207,7 @@ declare module '@tiptap/core' {
           storage: Storage
           editor: Editor
           type: MarkType
-          parent: ParentConfig<MarkConfig<Options, Storage>>['onUpdate']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onUpdate']
         }) => void)
       | null
 
@@ -221,7 +221,7 @@ declare module '@tiptap/core' {
           storage: Storage
           editor: Editor
           type: MarkType
-          parent: ParentConfig<MarkConfig<Options, Storage>>['onSelectionUpdate']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onSelectionUpdate']
         }) => void)
       | null
 
@@ -236,7 +236,7 @@ declare module '@tiptap/core' {
             storage: Storage
             editor: Editor
             type: MarkType
-            parent: ParentConfig<MarkConfig<Options, Storage>>['onTransaction']
+            parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onTransaction']
           },
           props: {
             transaction: Transaction
@@ -255,7 +255,7 @@ declare module '@tiptap/core' {
             storage: Storage
             editor: Editor
             type: MarkType
-            parent: ParentConfig<MarkConfig<Options, Storage>>['onFocus']
+            parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onFocus']
           },
           props: {
             event: FocusEvent
@@ -274,7 +274,7 @@ declare module '@tiptap/core' {
             storage: Storage
             editor: Editor
             type: MarkType
-            parent: ParentConfig<MarkConfig<Options, Storage>>['onBlur']
+            parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onBlur']
           },
           props: {
             event: FocusEvent
@@ -292,7 +292,7 @@ declare module '@tiptap/core' {
           storage: Storage
           editor: Editor
           type: MarkType
-          parent: ParentConfig<MarkConfig<Options, Storage>>['onDestroy']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['onDestroy']
         }) => void)
       | null
 
@@ -310,7 +310,7 @@ declare module '@tiptap/core' {
           name: string
           options: Options
           storage: Storage
-          parent: ParentConfig<MarkConfig<Options, Storage>>['inclusive']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['inclusive']
           editor?: Editor
         }) => MarkSpec['inclusive'])
 
@@ -323,7 +323,7 @@ declare module '@tiptap/core' {
           name: string
           options: Options
           storage: Storage
-          parent: ParentConfig<MarkConfig<Options, Storage>>['excludes']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['excludes']
           editor?: Editor
         }) => MarkSpec['excludes'])
 
@@ -341,7 +341,7 @@ declare module '@tiptap/core' {
           name: string
           options: Options
           storage: Storage
-          parent: ParentConfig<MarkConfig<Options, Storage>>['group']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['group']
           editor?: Editor
         }) => MarkSpec['group'])
 
@@ -354,7 +354,7 @@ declare module '@tiptap/core' {
           name: string
           options: Options
           storage: Storage
-          parent: ParentConfig<MarkConfig<Options, Storage>>['spanning']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['spanning']
           editor?: Editor
         }) => MarkSpec['spanning'])
 
@@ -367,7 +367,7 @@ declare module '@tiptap/core' {
           name: string
           options: Options
           storage: Storage
-          parent: ParentConfig<MarkConfig<Options, Storage>>['code']
+          parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['code']
           editor?: Editor
         }) => boolean)
 
@@ -378,7 +378,7 @@ declare module '@tiptap/core' {
       name: string
       options: Options
       storage: Storage
-      parent: ParentConfig<MarkConfig<Options, Storage>>['parseHTML']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['parseHTML']
       editor?: Editor
     }) => MarkSpec['parseDOM']
 
@@ -391,7 +391,7 @@ declare module '@tiptap/core' {
             name: string
             options: Options
             storage: Storage
-            parent: ParentConfig<MarkConfig<Options, Storage>>['renderHTML']
+            parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['renderHTML']
             editor?: Editor
           },
           props: {
@@ -408,13 +408,13 @@ declare module '@tiptap/core' {
       name: string
       options: Options
       storage: Storage
-      parent: ParentConfig<MarkConfig<Options, Storage>>['addAttributes']
+      parent: ParentConfig<MarkConfig<Options, Storage, AttributeTypes>>['addAttributes']
       editor?: Editor
-    }) => Attributes | {}
+    }) => Attributes<AttributeTypes> | {}
   }
 }
 
-export class Mark<Options = any, Storage = any> {
+export class Mark<Options = any, Storage = any, AttributeTypes = any> {
   type = 'mark'
 
   name = 'mark'
@@ -432,7 +432,7 @@ export class Mark<Options = any, Storage = any> {
     defaultOptions: {},
   }
 
-  constructor(config: Partial<MarkConfig<Options, Storage>> = {}) {
+  constructor(config: Partial<MarkConfig<Options, Storage, AttributeTypes>> = {}) {
     this.config = {
       ...this.config,
       ...config,
@@ -465,8 +465,8 @@ export class Mark<Options = any, Storage = any> {
     ) || {}
   }
 
-  static create<O = any, S = any>(config: Partial<MarkConfig<O, S>> = {}) {
-    return new Mark<O, S>(config)
+  static create<O = any, S = any, A = any>(config: Partial<MarkConfig<O, S, A>> = {}) {
+    return new Mark<O, S, A>(config)
   }
 
   configure(options: Partial<Options> = {}) {
@@ -486,10 +486,10 @@ export class Mark<Options = any, Storage = any> {
     return extension
   }
 
-  extend<ExtendedOptions = Options, ExtendedStorage = Storage>(
-    extendedConfig: Partial<MarkConfig<ExtendedOptions, ExtendedStorage>> = {},
+  extend<ExtendedOptions = Options, ExtendedStorage = Storage, ExtendedAttributeTypes = AttributeTypes>(
+    extendedConfig: Partial<MarkConfig<ExtendedOptions, ExtendedStorage, ExtendedAttributeTypes>> = {},
   ) {
-    const extension = new Mark<ExtendedOptions, ExtendedStorage>(extendedConfig)
+    const extension = new Mark<ExtendedOptions, ExtendedStorage, ExtendedAttributeTypes>(extendedConfig)
 
     extension.parent = this
 
